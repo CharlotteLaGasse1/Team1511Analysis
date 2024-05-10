@@ -1,0 +1,27 @@
+%Team1511AnalysisCharlotteLaGasse
+sympref('FloatingPointOutput',true);
+% Define constants and parameters
+syms q_2 q_1 T_out Q_dot 
+
+k = 0.15;
+L = 0.003;
+T_amb = 16;
+width = 1*0.4048;
+height = 1*0.4048;
+Rsc = 0.35;
+T_in = 35;
+
+SA_torso = width*height;
+volume_shirt = SA_torso*L;
+Q_colby = 0;
+energy_out = q_2 == (T_out - T_amb)/Rsc;
+
+energy_in = q_1 == Q_colby + Q_dot*volume_shirt;
+
+energy_balance = q_1 == q_2;
+
+diff_eq = T_out == (-Q_dot*(L^2))/(2*k) + ( -( (Q_colby) / (SA_torso) )* L )/k + T_in;
+
+S = solve(energy_out, energy_in, energy_balance, diff_eq)
+
+disp(S.Q_dot * volume_shirt)
